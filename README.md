@@ -6,9 +6,10 @@ This repo hosts the meta-layer for [Pluma](https://github.com/customerio/pluma),
 
 ## Read first
 
-- [AGENTS.md](./AGENTS.md) — entrypoint for AI agents reading this repo.
+- [AGENTS.md](./AGENTS.md) — entrypoint for AI agents reading this repo. How to route prompts to the right files.
 - [DESIGN.md](./DESIGN.md) — the canonical spec. Voice, components, states, refinement levers, anti-patterns.
 - [tokens.md](./tokens.md) — color and typography token reference.
+- [prompts.md](./prompts.md) — task-shaped starter prompts for humans. Pick a recipe instead of memorizing the spec.
 
 ## Per-component AI guidelines
 
