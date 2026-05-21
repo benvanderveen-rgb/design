@@ -5,7 +5,7 @@
 - Use DataTable to display, organize, compare, and act on tabular data with multiple fields.
 - Use DataTable for simpler comparative lists too, but omit interactive features (search, filters, row selection) when they are unnecessary.
 - Never use DataTable for page layout. Use Box or Grid instead.
-- Add only the features the user needs. Too many options overwhelm users.
+- Add only the features the screen needs. Too many options overwhelm the people scanning the table.
 
 ## Types
 
@@ -122,7 +122,7 @@
 
 ## Implementation Notes
 
-- Keep the minimum number of columns visible by default. Allow users to show/hide extras via `withColumnsSettings`.
+- Keep the minimum number of columns visible by default. Allow people to show/hide extras via `withColumnsSettings`.
 - `data` and `columns` are required. `columns` follow TanStack Table column definitions — use `createColumnHelper` from `@tanstack/table-core`.
 - Row IDs default to the `id` property on each data row, then fall back to row index. Override with `getRowId`.
 - Pass `children` to fully replace the default layout (Header + Table + Pagination) with custom composition.

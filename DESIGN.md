@@ -89,7 +89,7 @@ Use for status or category indicators with short descriptive text ("Active", "Dr
 
 - Use for tabular data with multiple fields
 - Never use DataTable for page layout — use Box or Grid
-- Strip features when not needed — don't add search, filters, or row selection unless users require them
+- Strip features when not needed — don't add search, filters, or row selection unless the screen requires them
 - Provide a `caption` (required, hidden visually, for assistive tech)
 - Column headers: sentence case, full words, no abbreviations
 - Show a meaningful empty state with title, description, icon, and action — never leave blank
@@ -160,6 +160,20 @@ For components not detailed above (Badge, Avatar, Input, Checkbox, Radio, Toggle
 
 ## Density
 
+**Bias generous over tight.** When two sanctioned values would both work — padding, gap, row height, field spacing, surface margin — choose the more generous one. The point is *calm density*: close enough that grouped elements relate, far enough that surfaces breathe. Spec-attached output should read as deliberately spaced compared to tight-by-default agent output. If a surface looks correct but cramped, it's wrong. A few pixels of extra room across a screen is the difference between "the agent shipped it" and "a designer touched it."
+
+Where this bias lands in practice:
+
+- **Content surfaces** (cards holding body copy, settings panels, feature moments) — default to `space-300` (24px) padding, not `space-200`. The latter is the compact floor; reach for it only when the surface lives in a dense grid.
+- **Form field gaps** — 24px is the baseline named below; lean to 28–32px when fields carry helper text or when the form is part of an onboarding flow.
+- **Field-group gaps** — 32px baseline; reach for 40px when groups represent distinct stages of a flow.
+- **Table rows** — 36px is the default named below; consider 40px when row content includes multi-line cells or paired text-and-meta.
+- **Stack gaps inside surfaces** — `space-200` is the baseline; `space-300` when children are reading-weight (headings, body paragraphs) rather than scanning-weight (rows, chips, metric tiles).
+
+The bias is one step, not two. Don't jump to `space-400` because more is more — calm density, not roomy density.
+
+### Concrete defaults
+
 - **Body text:** `text-product-p` (sans, 14px, regular weight, 20px line-height)
 - **Small text:** `text-product-ps` for metadata and helper text, `text-product-pxs` for timestamps and captions
 - **Headings:** `text-product-h1` through `text-product-h4`
@@ -180,6 +194,8 @@ Token names follow the pattern `color-{family}-{intent}-{weight}-{state}`.
 
 - **Families:** `surface` (backgrounds), `border`, `text`, `icon`
 - **Intents:** `base` (neutral), `accent` (brand teal), `caution` (warning yellow), `critical` (error/destructive red), `information` (info blue), `success` (green), `feature` (purple)
+
+The Customer.io brand accent is `teal_spruce` — a dark, spruce-leaning teal, not a blue. Generic "primary blue" is never the right choice for a primary action. Blue tokens (`blue_wave`, `blue`) are reserved for the `information` intent, focus rings, and the Label `blue` semantic.
 - **Weights:** default, `bold` (stronger), `subtle` (lighter), `minimal` (lightest tint)
 - **States:** default, `hover`, `active`, `disabled`, `focus`
 
@@ -305,6 +321,7 @@ When a per-component file does not have a Refinement section yet, the levers abo
 ### Visual and structural
 
 - Inline hex values — always use Pluma tokens
+- Blue primary buttons — the brand primary is `color-surface-accent` (`teal_spruce`, a dark spruce-leaning teal). Blue tokens are reserved for `information`, focus rings, and the Label `blue` semantic
 - Arbitrary pixel padding values — use the sanctioned spacing scale (`space-100`, `space-200`, `space-300`) per the [Refinement levers](#refinement-levers) padding range
 - `flex` or inline-style overrides on split panels — use the three sanctioned `ModalSplit` ratios; custom ratios go through design review
 - Custom media slots beyond `top`, `leading`, `trailing`, `bleed` — additional slots are a pattern, not a refinement

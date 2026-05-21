@@ -1,20 +1,63 @@
-# Customer.io Design System — Bundled Reference
+# DESIGN.md bundle — Customer.io
 
-This bundle combines the modular Customer.io DESIGN.md system into a single paste-friendly document. It is intended for sharing with collaborators who want to try DESIGN.md against an AI agent (Claude, Cursor, ChatGPT) without attaching eight separate files.
+**Refreshed 2026-05-20.** A paste-friendly snapshot of Customer.io's design spec — voice rules, refinement levers, anti-patterns, governance, and per-component guidelines — consolidated into one file for tools that can't read source files directly.
 
-## What is in this bundle, in order
+The spec is in transition. Today it lives as a standalone set of markdown files; soon it moves into Pluma as a pattern library alongside the components themselves (Polaris-style: one markdown source, served by the Pluma site for humans and Pluma MCP for agents). This bundle is a point-in-time snapshot of where the spec lives now, not the long-term canonical source. When you can connect to Pluma directly, prefer that over this file.
 
-1. **DESIGN.md** — the rules layer. Tone, voice, components, states, density, color tokens, anti-patterns, escape hatches. This is the file an AI agent reads on every prompt.
-2. **tokens.md** — the foundation reference. Every surface, border, text, and icon color token with its underlying palette, component-specific aliases (Banner, Label, Navigation, Toggle), Journeys workflow tokens, and the full typography composite token set (headings, body, labels, links, code).
-3. **Per-component AI guidelines** for Banner, Breadcrumbs, Button, DataTable, Label, and Modal. Authoritative depth on each primitive: usage, variants, props, behaviors, content rules, and deprecations.
+## How to use this bundle when you read it
 
-## How to use this bundle with an AI agent
+You will usually be asked to generate, critique, or refactor Customer.io UI by a human who does **not** name the spec section to use. Your job is to figure out which part of this bundle applies, read it, and then generate.
 
-Paste this entire document into a Claude, Cursor, or ChatGPT conversation as a single attached file or single message. Then prompt normally: ask the agent to generate UI, critique a screenshot, rewrite copy, or propose a new pattern. The agent will reference the rules and depth from this document.
+### Routing — figure out which section to read
 
-## A note on cross-references
+For every UI prompt:
 
-In the canonical project folder, these eight files live as separate documents with markdown cross-references (e.g., DESIGN.md links to `tokens.md`). Those references remain in this bundle even though everything is now inline. Search for the referenced filename (e.g., `tokens.md` or `banner.ai-guidelines.md`) to jump to the matching section.
+1. **Always read** the DESIGN.md section below. It carries voice, components, states, density, refinement levers, anti-patterns, escape hatches.
+2. **Reach for the tokens.md section** for any color, spacing, border, elevation, or typography value. Never inline a hex code or pixel value.
+3. **Match the surface in the prompt to a per-component section below:**
+   - Modal, dialog, confirmation, feature moment → `Modal`
+   - Banner, alert, notice, announcement → `Banner`
+   - Card, panel, tile, container, settings group → `Surfaces`
+   - Table, list, grid, data display → `DataTable`
+   - Button, action, CTA → `Button`
+   - Status pill, badge for category → `Label`
+   - Breadcrumb, nav hierarchy → `Breadcrumbs`
+4. If the prompt spans multiple surfaces, read all matching sections. Cross-cutting rules in DESIGN.md still apply.
+
+### Six-check pre-flight before delivering UI work
+
+1. **Voice** — sentence case, no exclamation marks, no "please" / "sorry" / "oops" / "easy" / "simply" / "just" / "users". Tabular numerals on numbers. Single-verb button labels. Action-oriented titles.
+2. **Components** — only Pluma primitives (`PlumaButton`, `PlumaBanner`, `PlumaBox`, etc.). No native `<button>`, `<select>`, or custom-div modals.
+3. **Tokens** — every color is a token name, every padding is on the spacing scale (`space-100`–`space-400`). No inline hex, no pixel padding, no `flex` overrides on split panels.
+4. **States** — loading, empty, error, success, permission-denied all named.
+5. **Refinement levers** — for every layout call, name the lever (padding scale, media placement, panel proportion, density, edge treatment), the recipe, and whether the choice ships solo or needs design review.
+6. **Anti-patterns** — final scan against the anti-pattern list in the DESIGN.md section.
+
+### Self-flag at the governance bar
+
+If a refinement crosses into "Requires design review" in any bounds table — custom split ratios, mixed density on one surface, full bleed combined with elevation, a new media slot — stop. Name what is being reached for. Do not ship past the bar silently.
+
+### Names
+
+- File: `DESIGN.md`
+- System: `Pluma`
+- Package: `@customerio/ui`
+
+---
+
+## Bundle contents
+
+The sections below appear in this order:
+
+1. [DESIGN.md](#designmd--customerio-product-design-system) — the spec
+2. [tokens.md](#tokensmd) — color and typography token reference
+3. [Banner](#banner) — Banner / Alert per-component guidelines
+4. [Breadcrumbs](#breadcrumbs) — Breadcrumbs per-component guidelines
+5. [Button](#button) — Button per-component guidelines
+6. [DataTable](#datatable) — DataTable per-component guidelines
+7. [Label](#label) — Label per-component guidelines
+8. [Modal](#modal) — Modal per-component guidelines
+9. [Surfaces](#surfaces) — Card / Box / Panel per-component guidelines (new 2026-05-18)
 
 ---
 
@@ -80,6 +123,8 @@ Use for non-modal, page-level information: status changes, warnings, feature ann
 - Do not put all info in the title alone — use description (children) for detail
 - Title: sentence case, few strong summary words
 
+For icon swaps, outlined vs. filled treatment, action layout, and edge treatment, see [Refinement levers](#refinement-levers) and the [Banner refinement recipes](./banner.ai-guidelines.md#refinement).
+
 ### Label (`PlumaLabel`)
 
 Use for status or category indicators with short descriptive text ("Active", "Draft"). Limit text to one or two words.
@@ -107,7 +152,7 @@ Use for status or category indicators with short descriptive text ("Active", "Dr
 
 - Use for tabular data with multiple fields
 - Never use DataTable for page layout — use Box or Grid
-- Strip features when not needed — don't add search, filters, or row selection unless users require them
+- Strip features when not needed — don't add search, filters, or row selection unless the screen requires them
 - Provide a `caption` (required, hidden visually, for assistive tech)
 - Column headers: sentence case, full words, no abbreviations
 - Show a meaningful empty state with title, description, icon, and action — never leave blank
@@ -136,6 +181,18 @@ Common patterns:
 - **Destructive confirmation** — hide close button, require explicit input (e.g., text field), disable primary until met, mark primary `isDanger`
 - **Form** — disable overlay click dismissal (`shouldCloseOnOverlayClick={false}`) to prevent accidental data loss
 - **Save/Discard** — hide close button, three footer actions: go back, discard (`isDanger`), save (primary)
+
+For padding, media placement, panel proportion, density, and edge treatment, see [Refinement levers](#refinement-levers) and the [Modal refinement recipes](./modal.ai-guidelines.md#refinement).
+
+### Surfaces — Card, Box, Panel (`PlumaBox`)
+
+Pluma does not ship a single `Card` primitive. Surfaces are composed from `Box` with sanctioned tokens for padding, surface, border, elevation, and media placement.
+
+- Compose from `Box` and `Stack` — never a `<div>` with inline styles
+- Use a surface to group related content into a single visual unit; use a section divider with no background when content belongs to the page flow
+- Never nest filled surfaces more than two levels deep
+- Elevation `prominent` is reserved for overlays (popovers, dropdowns) — not for in-flow cards
+- For padding scale, media placement, density, and edge treatment, see [Refinement levers](#refinement-levers) and the [Surface refinement recipes](./surfaces.ai-guidelines.md#refinement)
 
 ### Cross-cutting patterns across Pluma components
 
@@ -166,6 +223,20 @@ For components not detailed above (Badge, Avatar, Input, Checkbox, Radio, Toggle
 
 ## Density
 
+**Bias generous over tight.** When two sanctioned values would both work — padding, gap, row height, field spacing, surface margin — choose the more generous one. The point is *calm density*: close enough that grouped elements relate, far enough that surfaces breathe. Spec-attached output should read as deliberately spaced compared to tight-by-default agent output. If a surface looks correct but cramped, it's wrong. A few pixels of extra room across a screen is the difference between "the agent shipped it" and "a designer touched it."
+
+Where this bias lands in practice:
+
+- **Content surfaces** (cards holding body copy, settings panels, feature moments) — default to `space-300` (24px) padding, not `space-200`. The latter is the compact floor; reach for it only when the surface lives in a dense grid.
+- **Form field gaps** — 24px is the baseline named below; lean to 28–32px when fields carry helper text or when the form is part of an onboarding flow.
+- **Field-group gaps** — 32px baseline; reach for 40px when groups represent distinct stages of a flow.
+- **Table rows** — 36px is the default named below; consider 40px when row content includes multi-line cells or paired text-and-meta.
+- **Stack gaps inside surfaces** — `space-200` is the baseline; `space-300` when children are reading-weight (headings, body paragraphs) rather than scanning-weight (rows, chips, metric tiles).
+
+The bias is one step, not two. Don't jump to `space-400` because more is more — calm density, not roomy density.
+
+### Concrete defaults
+
 - **Body text:** `text-product-p` (sans, 14px, regular weight, 20px line-height)
 - **Small text:** `text-product-ps` for metadata and helper text, `text-product-pxs` for timestamps and captions
 - **Headings:** `text-product-h1` through `text-product-h4`
@@ -186,6 +257,8 @@ Token names follow the pattern `color-{family}-{intent}-{weight}-{state}`.
 
 - **Families:** `surface` (backgrounds), `border`, `text`, `icon`
 - **Intents:** `base` (neutral), `accent` (brand teal), `caution` (warning yellow), `critical` (error/destructive red), `information` (info blue), `success` (green), `feature` (purple)
+
+The Customer.io brand accent is `teal_spruce` — a dark, spruce-leaning teal, not a blue. Generic "primary blue" is never the right choice for a primary action. Blue tokens (`blue_wave`, `blue`) are reserved for the `information` intent, focus rings, and the Label `blue` semantic.
 - **Weights:** default, `bold` (stronger), `subtle` (lighter), `minimal` (lightest tint)
 - **States:** default, `hover`, `active`, `disabled`, `focus`
 
@@ -238,6 +311,56 @@ Outside the journey canvas, do not use workflow tokens. Inside it, do not invent
 - `color-banner-warning-*` is deprecated — use `color-banner-caution-*`
 - Banner `variant="warning"` is deprecated — use `variant="caution"`
 
+## Refinement levers
+
+Pluma deliberately exposes a narrow set of props per component. Most of the layout nuance designers reach for — padding shifts, image placement, panel weighting, edge treatments — is not a prop on the component. It is a **composition recipe** built from primitives Pluma already ships: `Box`, `ModalSplit`, `ModalInset`, `Stack`, `Grid`, sprinkle spacing props, and the spacing-token scale.
+
+The rules in this section define the bounded vocabulary AI agents and engineers can reach for when a screen needs refinement that the base component does not name. Treat it as the only sanctioned vocabulary — outside this list, refinement falls back to the [Escape hatches](#escape-hatches) bar.
+
+### Five cross-cutting levers
+
+Every refinement is one of these five. Name the lever you are reaching for before you compose.
+
+- **Padding scale** — adjust the inner spacing of a surface. Three steps only: `compact`, `default`, `relaxed`. Compose with sprinkle `padding` props or by wrapping content in `Box` with a spacing token. Never apply arbitrary pixel values.
+- **Media placement** — where an image, illustration, or visual sits relative to the body. Four slots only: `top`, `leading`, `trailing`, `bleed` (edge-to-edge). Compose with `ModalSplit`, `ModalInset`, or a `Box` with the `inheritPadding` pattern.
+- **Panel proportion** — for split layouts, the relative weight of the two columns. Three ratios only: `50/50` (balanced, default), `40/60` (narrative leads), `60/40` (form leads). Express via `ModalSplit` width tokens, never as a `flex` override.
+- **Density** — vertical and horizontal rhythm. Three steps: `compact`, `default`, `relaxed`. Maps to the spacing-token scale; never to inline pixel values. Density should be set at the surface level and inherit downward.
+- **Edge treatment** — how content meets the surface boundary. Three modes: `inset` (full padding, default), `flush` (zero padding on one or more edges), `bleed` (content extends to the full surface bounds, including media). Compose with `ModalInset`, `Box` with negative-margin tokens, or the surface's `inheritPadding={false}` pattern.
+
+### How to compose
+
+Start from the base component, then layer one or two levers at most. Composing more than two levers on a single surface is a flag that the layout has outgrown the component.
+
+- **Adjusting padding** — wrap or replace the default body with `<Box padding={spacingToken}>` using `space-100` (compact), `space-200` (default), `space-300` (relaxed). The token names map to the spacing scale in [tokens.md](./tokens.md#spacing-tokens).
+- **Adding a top image** — place the media inside `<ModalInset inheritPadding={false}>` above `ModalBody`. The image bleeds to the surface edges; body padding resumes below.
+- **Adding a side image** — use `<ModalSplit>` before `<ModalBody>` for a leading panel, after for a trailing panel. Side is set by DOM order, not a prop.
+- **Mixing inset and standard content** — `ModalInset` accepts content alongside padded body content within the same `ModalBody`. Use this for full-width banners or dividers inside an otherwise-padded modal.
+- **Tightening density inside a surface** — apply density at the surface root, then let descendants inherit. Do not set density on individual rows or fields.
+
+### Governance — ship solo vs. ask design
+
+Each lever has a bounded range that ships solo and a threshold that requires design review. The bound is the line where the refinement stops being a recipe and starts being a new pattern.
+
+| Lever | Ships solo (no review) | Requires design review |
+|---|---|---|
+| Padding scale | One step from default (`compact` or `relaxed`) using sanctioned spacing tokens | Custom padding values, or stepping more than one level (e.g., compact → relaxed in the same surface) |
+| Media placement | Any of the four sanctioned slots, single image per surface | Multiple media slots on one surface, or media that overlaps non-media content |
+| Panel proportion | Any of the three sanctioned ratios using `ModalSplit` | Custom ratios, three-column layouts, or proportion changes mid-flow |
+| Density | One step from default | Mixed density within a single surface, or density applied per-field rather than per-surface |
+| Edge treatment | `inset` (default) or single-side `flush` | Full-`bleed` content that crosses navigation chrome, or `bleed` combined with shadows |
+
+When a refinement crosses into the right column, do not ship it. Open the conversation with `#design-systems` or attach a design review to the PR. The bound exists because the right column is where new patterns are born — and new patterns belong in Pluma, not in a one-off composition.
+
+### Per-component refinement recipes
+
+The cross-cutting levers above describe the vocabulary. Concrete recipes — which props, which subcomponents, which tokens — live in the per-component AI guideline files:
+
+- Modal: see [modal.ai-guidelines.md](./modal.ai-guidelines.md#refinement)
+- Banner: see [banner.ai-guidelines.md](./banner.ai-guidelines.md#refinement)
+- Cards and surfaces: see [surfaces.ai-guidelines.md](./surfaces.ai-guidelines.md#refinement)
+
+When a per-component file does not have a Refinement section yet, the levers above are the only available source. Composing outside that vocabulary is an [escape hatch](#escape-hatches) by definition.
+
 ## Anti-patterns — never generate
 
 ### Deprecations to avoid in any generated code
@@ -261,6 +384,11 @@ Outside the journey canvas, do not use workflow tokens. Inside it, do not invent
 ### Visual and structural
 
 - Inline hex values — always use Pluma tokens
+- Blue primary buttons — the brand primary is `color-surface-accent` (`teal_spruce`, a dark spruce-leaning teal). Blue tokens are reserved for `information`, focus rings, and the Label `blue` semantic
+- Arbitrary pixel padding values — use the sanctioned spacing scale (`space-100`, `space-200`, `space-300`) per the [Refinement levers](#refinement-levers) padding range
+- `flex` or inline-style overrides on split panels — use the three sanctioned `ModalSplit` ratios; custom ratios go through design review
+- Custom media slots beyond `top`, `leading`, `trailing`, `bleed` — additional slots are a pattern, not a refinement
+- Density set per-field or per-row instead of per-surface
 - "Are you sure?" modals for non-destructive actions
 - Decorative shadows (every shadow must communicate elevation)
 - Color as the only signal of state (always pair with icon or text)
@@ -349,6 +477,7 @@ These files live alongside this `DESIGN.md` in the project folder and provide de
 - [data-table.ai-guidelines.md](./data-table.ai-guidelines.md) — DataTable component
 - [label.ai-guidelines.md](./label.ai-guidelines.md) — Label component
 - [modal.ai-guidelines.md](./modal.ai-guidelines.md) — Modal component
+- [surfaces.ai-guidelines.md](./surfaces.ai-guidelines.md) — Card, Box, Panel — composed surface recipes
 
 ### What's not yet documented at the AI-guideline level
 
@@ -464,6 +593,7 @@ Links to related components or Figma frames.
 - [Customer.io Design blog](https://medium.com/customer-io-design)
 - DESIGN.md mission and project plan: see `Design.md project/DESIGN-md-mission.md` and the Linear project at https://linear.app/customerio/project/designmd-3d70a4786aa1
 
+
 ---
 
 # Pluma Design Tokens
@@ -550,6 +680,8 @@ Use for backgrounds, fills, and container surfaces.
 | `color-surface-accent-hover` | `palette-teal_spruce-500` |
 | `color-surface-accent-minimal` | `palette-teal_spruce-100` |
 | `color-surface-accent-subtle` | `palette-teal_spruce-200` |
+
+**Brand teal — visual reference.** `palette-teal_spruce-400` is Customer.io's brand accent: a **dark, spruce-leaning teal**, not a blue, not a bright turquoise. It is the color of every primary button in the live product. Approximate hex: `#1F4548` (confirm against Pluma's CSS variable definitions — `themeVars.color['surface-accent']` is the runtime source of truth). If a generated UI shows a sea-blue or sky-blue primary button, the token has been swapped for an inline hex — fix it back to `color-surface-accent`.
 
 ### Surface — caution
 
@@ -990,13 +1122,14 @@ Both link tokens use `text-decoration: underline`. The difference is weight (med
 
 ## What's missing from this file
 
-- **Dark theme tokens.** This file covers light theme only. When dark theme tokens exist, they live in a parallel `palette-*` set.
+- **Dark theme tokens.** This file covers light theme only today. Dark mode is shipping soon — tokens will land directly in Pluma as part of the migration, as a parallel `palette-*` set surfaced through the same MCP and site interfaces. Watch the Pluma repo.
 - **Hex values.** Tokens reference palette names (e.g., `palette-grey_charcoal-050`), not raw hex. The palette → hex mapping lives in Pluma's CSS variable definitions (`themeVars.color[...]` resolves at runtime).
 - **Primitive typography tokens.** Composite text tokens are documented above; the primitives they reference (`font-size-xl`, `font-weight-semibold`, etc.) are not. Add the primitives when the source data is available so the mapping is concrete.
 - **Spacing, radius, shadow tokens.** This file covers color and typography. Other token families are still TODO.
 - **Data-viz / chart palettes.** Not yet documented. The workflow tokens above are categorical for Journeys; general chart palettes (categorical, sequential, diverging) are still TODO.
 
 Adding the missing pieces is straightforward once the source data is available.
+
 
 ---
 
@@ -1034,6 +1167,66 @@ Adding the missing pieces is straightforward once the source data is available.
 - Override the default icon per variant with `icon` set to any Pluma icon name. Set `icon={null}` to remove the icon entirely.
 - Default icons per variant: `default` = `tip`, `information` = `help`, `success` = `check-circle`, `caution` = `warning`, `error` = `error`, `feature` = `feature-launch`.
 
+## Refinement
+
+Banner's prop surface is intentionally narrow. The refinement levers from [DESIGN.md](./DESIGN.md#refinement-levers) map to Banner as recipes built from `type`, `isOutlined`, `icon`, action layout, and the surrounding container. No new props, no custom CSS.
+
+### Padding scale
+
+Banner's internal padding is set by `type`. Choose the type that matches the message weight rather than overriding padding.
+
+- **Compact** — `type="inline"` paired with `isOutlined` and `icon={null}` for a single-line, low-emphasis note inside a card or list. Padding tightens visually because the border replaces the filled background.
+- **Default** — `type="inline"` with the variant's default icon. The right answer for nearly every banner.
+- **Relaxed** — `type="alert"` for page-level notices that need more presence. The elevated shadow and constrained width create air around the message.
+
+**Ships solo:** matching `type` to message weight using one of the three recipes.
+**Requires design review:** wrapping a Banner in a custom `Box` to add padding, or overriding `type` styles with sprinkle margins to fake a different density.
+
+### Media placement (icon as media)
+
+The icon is the only media a Banner carries. Four sanctioned recipes; no inline images.
+
+- **Leading icon** (default) — the variant's default icon, sized 20px, vertically aligned with the title row.
+- **Custom icon** — pass `icon="icon-name"` to swap the default. Use only when the default icon misrepresents the message (e.g., a `caution` Banner about a billing issue may swap `warning` for `credit-card`).
+- **No icon** — `icon={null}`. Use for dense list contexts where the icon would compete with surrounding affordances, or when the Banner sits adjacent to its own visual anchor (e.g., a status indicator dot).
+- **Announcement bleed** — `type="announcement"` renders the icon centered with the message. Reserve for application-wide notices; do not use for contextual messages.
+
+**Ships solo:** any of the four recipes above using a Pluma icon name.
+**Requires design review:** inline images inside the Banner, multiple icons in one Banner, or icon positions other than leading.
+
+### Action layout
+
+Banner allows one primary action plus one dismiss. The placement adapts to container width.
+
+- **Inline trailing** (default for ≥576px containers) — action sits to the right of the message text.
+- **Wrap below** (automatic for <576px containers) — action wraps onto its own row beneath the message. Controlled by the component, not configurable.
+- **Action-only** — pass `action` with `icon={null}` and a single sentence of body copy for a high-emphasis nudge inside a card.
+
+**Ships solo:** the default inline-or-wrap behavior; choosing whether to include an action at all.
+**Requires design review:** more than one primary action, action placement above the message, or action wrapped in a custom container.
+
+### Density and visual weight
+
+Banner expresses density through `isOutlined` and `type` rather than spacing tokens.
+
+- **Filled** (default) — variant's semantic surface color. Use when the message is the primary focus of its surface.
+- **Outlined** (`isOutlined`) — white background with the variant's color as a border. Use when the Banner sits inside an already-colored surface (a card, a modal body) where a filled background would muddy the hierarchy.
+- **Subtle** — `variant="default"` with `isOutlined`. The quietest treatment; reserve for tips and guidance the user can ignore.
+
+**Ships solo:** matching filled vs. outlined to the surrounding surface contrast.
+**Requires design review:** combining multiple visual weights in one stack of banners, or applying custom border weights.
+
+### Edge treatment
+
+How the Banner meets the surface around it.
+
+- **Inset** (default for `inline` and `alert`) — the Banner has its own border radius and sits within the page flow.
+- **Flush** (`type="announcement"`) — zero border radius, full container width. Use for system-wide notices that span the application chrome.
+- **Bleed inside a card** — to place a Banner edge-to-edge inside a `Box` with padding, wrap it in `<Box marginX={negative-spacing-token}>` using the negative-margin tokens documented in tokens.md. Never use inline negative pixels.
+
+**Ships solo:** `inline`, `alert`, or `announcement` per the type's intended use.
+**Requires design review:** stacking multiple `announcement` Banners, or any composition that nests a Banner inside another Banner.
+
 ## Behaviors
 
 - Providing `onClose` without `shouldShowDismissButton` renders an icon-only close button. Setting `shouldShowDismissButton` with `onClose` renders a text dismiss button instead.
@@ -1059,6 +1252,7 @@ Adding the missing pieces is straightforward once the source data is available.
 - `withResponsiveContainer` defaults to `true` for inline type when the close button is not shown. Override explicitly when needed.
 - The component is polymorphic via `as` (defaults to `div`).
 - `action.variant` defaults to `"subtle"`.
+
 
 ---
 
@@ -1091,6 +1285,7 @@ Adding the missing pieces is straightforward once the source data is available.
 - The `maxItems` prop controls when collapsing begins. The ellipsis counts as one item toward this limit. The minimum visible count is `3` (first item, ellipsis, last item).
 - The component extends Box and supports sprinkle props (spacing, layout utilities).
 - Ember invocation: `<PlumaBreadcrumbs @breadcrumbs={{this.items}} @maxItems={{5}} />`. All props use the `@` prefix.
+
 
 ---
 
@@ -1147,6 +1342,7 @@ Adding the missing pieces is straightforward once the source data is available.
 - Content — React uses `children` for the label text. Ember uses `{{yield}}` (default block) via `<PlumaButton>Label</PlumaButton>`.
 - Button renders as `<button type="button">` by default. When `href` is provided, it renders as a `PlainLink` anchor element instead.
 
+
 ---
 
 # DataTable
@@ -1156,7 +1352,7 @@ Adding the missing pieces is straightforward once the source data is available.
 - Use DataTable to display, organize, compare, and act on tabular data with multiple fields.
 - Use DataTable for simpler comparative lists too, but omit interactive features (search, filters, row selection) when they are unnecessary.
 - Never use DataTable for page layout. Use Box or Grid instead.
-- Add only the features the user needs. Too many options overwhelm users.
+- Add only the features the screen needs. Too many options overwhelm the people scanning the table.
 
 ## Types
 
@@ -1273,13 +1469,14 @@ Adding the missing pieces is straightforward once the source data is available.
 
 ## Implementation Notes
 
-- Keep the minimum number of columns visible by default. Allow users to show/hide extras via `withColumnsSettings`.
+- Keep the minimum number of columns visible by default. Allow people to show/hide extras via `withColumnsSettings`.
 - `data` and `columns` are required. `columns` follow TanStack Table column definitions — use `createColumnHelper` from `@tanstack/table-core`.
 - Row IDs default to the `id` property on each data row, then fall back to row index. Override with `getRowId`.
 - Pass `children` to fully replace the default layout (Header + Table + Pagination) with custom composition.
 - Ember invocation: `<PlumaDataTable @data={{this.data}} @columns={{this.columns}} @caption="Items" />`. Feature props use `@` prefix (e.g., `@withSearch={{true}}`).
 - The component is polymorphic via `as` (defaults to `div`). It extends Box.
 - `onSortingChange` at the top level is deprecated. Use `sorting.onChange` instead.
+
 
 ---
 
@@ -1289,7 +1486,7 @@ Adding the missing pieces is straightforward once the source data is available.
 
 - Use Labels to indicate status or categorize items with short descriptive text (e.g., "Active", "Draft").
 - Use Badges, not Labels, to display numeric quantities (e.g., notification counts).
-- Use Tags, not Labels, for user-generated, interactive categorization that users can create, edit, or remove. Labels are read-only system indicators.
+- Use Tags, not Labels, for interactive categorization that people can create, edit, or remove. Labels are read-only system indicators.
 
 ## Variants
 
@@ -1318,6 +1515,7 @@ Adding the missing pieces is straightforward once the source data is available.
 - Content — React uses `children` for label text. Ember uses `{{yield}}` (default block) via `<PlumaLabel>Text</PlumaLabel>`.
 - Label extends `Text` — it renders as a `<span>` by default and can be changed via the `as` prop.
 
+
 ---
 
 # Modal
@@ -1326,7 +1524,7 @@ Adding the missing pieces is straightforward once the source data is available.
 
 - Use Modal for tasks requiring the user's immediate attention: action confirmations, short forms, feature moments, and supplementary workflows.
 - Never nest Modals. Rework the flow, move content inline, or use a Popover instead.
-- Use Modal when users must confirm a task or provide input before continuing. Use Drawer for content with less contextual relation to the main page. Use Popover for small, inline supplementary content.
+- Use Modal when people must confirm a task or provide input before continuing. Use Drawer for content with less contextual relation to the main page. Use Popover for small, inline supplementary content.
 - Keep Modal content focused on a single task. Move multi-step workflows or lengthy content to a dedicated page.
 
 ## Common Patterns
@@ -1348,6 +1546,80 @@ Adding the missing pieces is straightforward once the source data is available.
 - Size (`size`, default `"md"`) -- use `"md"` for most use cases. Use `"sm"` for shorter content and smaller viewports.
 - Close button (`shouldShowCloseButton`, default `true`) -- hide it only when the Modal requires an explicit user decision. Always provide a cancel action in the footer when the close button is hidden.
 - Inset (`ModalInset`) -- renders content edge-to-edge, ignoring the Modal's default padding. Use for full-width backgrounds, images, or dividers.
+
+## Refinement
+
+Modal exposes more layout nuance through composition than its prop surface suggests. The five refinement levers from the root [DESIGN.md](./DESIGN.md#refinement-levers) map to Modal as follows. Reach for these recipes rather than inventing new props or wrapping the component in custom CSS.
+
+### Padding scale
+
+Adjust the breathing room inside `ModalBody` without changing the Modal frame.
+
+- **Compact** -- wrap body content in `<Box padding="space-100">`. Use for confirmations, single-question forms, and dense data summaries. Pairs with `size="sm"`.
+- **Default** -- accept the Modal's built-in body padding. No wrapper needed. This is the right answer for nearly every form and feature moment.
+- **Relaxed** -- wrap body content in `<Box padding="space-300">`. Use for feature moments with a single large illustration and minimal text, where the air carries the emphasis.
+
+**Ships solo:** one step from default per surface.
+**Requires design review:** mixing compact and relaxed within the same Modal, applying different padding to header vs. body vs. footer, or any pixel value outside the spacing scale.
+
+### Media placement
+
+Where an image, illustration, or icon-art sits relative to the body content. Four sanctioned slots; no others.
+
+- **Top** -- place media inside `<ModalInset inheritPadding={false}>` immediately above `<ModalBody>`. The image bleeds to the Modal edges; the body's padding resumes below it. Use for feature moments and onboarding.
+- **Leading** -- use `<ModalSplit>` placed before `<ModalBody>` in DOM order. Renders as a left panel that bleeds to the Modal edges. Use for branded feature moments where the visual carries weight equal to the body.
+- **Trailing** -- use `<ModalSplit>` placed after `<ModalBody>` in DOM order. Renders as a right panel. Use sparingly; prefer leading unless the reading order demands the visual on the right.
+- **Bleed** -- a top-slot image with no visual frame (no caption, no surrounding chrome) extending to the Modal's full width and the header's top edge. Compose by placing `<ModalInset inheritPadding={false}>` before any header content. Reserve for feature launches and celebratory moments.
+
+**Ships solo:** any single sanctioned slot per Modal, one image per surface.
+**Requires design review:** multiple images on one surface, media that overlaps title or footer, or media slotted somewhere other than the four above (mid-body, behind text, etc.).
+
+### Panel proportion (split layouts only)
+
+When `ModalSplit` is used, the relative weight of the panel and the body.
+
+- **50/50** (default) -- balanced visual weight. Use when image and body share equal narrative load.
+- **40/60** (narrative leads) -- smaller panel, wider body. Use when the body content (form, list, copy) is the primary focus and the image supports it.
+- **60/40** (image leads) -- larger panel, narrower body. Use for hero-style feature moments where the image is the message.
+
+Express the ratio via the `ModalSplit` width tokens documented in tokens.md. Never override with a `flex` value or inline width.
+
+**Ships solo:** any of the three sanctioned ratios.
+**Requires design review:** custom ratios, three-column layouts, or proportion changes that shift within the same flow.
+
+### Density
+
+The vertical rhythm inside `ModalBody`.
+
+- **Compact** -- 4px field gap, 16px field-group gap, 32px row height for any inline lists. Use for data-heavy confirmations and review modals.
+- **Default** -- 8px field gap, 24px field-group gap. Use for most forms.
+- **Relaxed** -- 12px field gap, 32px field-group gap. Use for onboarding moments where the user is reading more than scanning.
+
+Set density once at the Modal root by wrapping body content in a `<Stack gap={token}>` or by applying spacing tokens at the surface level. Do not set per-field gaps.
+
+**Ships solo:** one step from default at the Modal level.
+**Requires design review:** mixed density within a single Modal, or density set per-field.
+
+### Edge treatment
+
+How content meets the Modal boundary.
+
+- **Inset** (default) -- standard body padding on all four edges.
+- **Flush** -- zero padding on one edge, typically the top or sides, to let a full-width banner, divider, or media element meet the Modal frame. Compose by placing the flush element inside `<ModalInset inheritPadding={false}>` while keeping sibling body content padded.
+- **Bleed** -- content extends to all four Modal edges. Reserve for full-image feature moments where the body is overlaid on the image with high-contrast text and a dimming layer (`color-surface-overlay-bold`). Bleed combined with shadows is forbidden -- the shadow no longer communicates elevation when the content extends to the frame.
+
+**Ships solo:** `inset` or single-side `flush`.
+**Requires design review:** full `bleed`, or any composition that hides the close button behind media.
+
+### Header and footer refinement
+
+Header and footer follow the same levers, with one constraint: the header's title row and the footer's button row are not customizable layouts. Padding around them is.
+
+- **Title row** -- to add a media element next to the title (e.g., a brand mark or feature icon), pass it as a slot via the `titleAccessory` prop. Do not compose a custom header.
+- **Footer** -- `ModalFooter` is fixed-layout: actions right-aligned, spaced. To override alignment, use the `groupVariant` prop on the underlying `ButtonGroup`. Never wrap the footer in a custom row.
+
+**Ships solo:** title accessories, footer `groupVariant` from the sanctioned list.
+**Requires design review:** any custom header layout, multi-row footers, or footer content that is not a Button.
 
 ## Behaviors
 
@@ -1379,3 +1651,152 @@ Adding the missing pieces is straightforward once the source data is available.
 - Ember invocation: `<PlumaModal @isOpen={{this.isOpen}} @onClose={{this.handleClose}} @title="Modal title">`. Subcomponents: `<PlumaModalBody>`, `<PlumaModalFooter>`, `<PlumaModalSplit>`, `<PlumaModalInset>`.
 - Ember default block yields a context value: `<PlumaModal ... as |ctx|>`.
 - Global defaults for `animationTransitionDuration` can be set via `PlumaProvider`'s `componentConfig.PlumaModal`.
+
+
+---
+
+# Surfaces (Card / Box / Panel)
+
+Pluma does not ship a single `Card` primitive. Surfaces are composed from `Box` with a small, sanctioned set of tokens for padding, elevation, border, and media placement. This file documents the recipes that compose those surfaces, the refinement levers available, and the bounds that ship solo versus require design review.
+
+## Usage
+
+- Use a surface to group related content into a single visual unit: a metric card, a settings panel, a campaign summary, a feature tile.
+- Compose from `Box` -- never a custom `div` with inline styles.
+- Surfaces are containers, not components. The content inside (heading, body, metric, action) is what carries meaning; the surface is its frame.
+- Use a surface when a group of content has its own boundary and elevation. Use a section divider with no background when content is part of the page flow.
+- Never nest filled surfaces more than two levels deep. A card inside a card inside a card is a flag that the page hierarchy needs rethinking.
+
+## Common patterns
+
+- **Metric card** -- single number with label, optional sparkline. `padding="space-200"`, `surface="base"`, no elevation.
+- **Summary card** -- title, body, optional action row. `padding="space-200"` or `space-300`, `surface="base"`, elevation `subtle`.
+- **Feature tile** -- icon or illustration, title, body, CTA. Media in the top slot, body padded, action in a footer row.
+- **Settings panel** -- form fields grouped under a heading. `padding="space-300"`, `surface="base"`, no elevation; sits inside a page-level frame.
+- **Empty-state surface** -- centered icon, title, description, primary CTA. `padding="space-400"`, `surface="subtle"`, no elevation.
+- **Callout surface** -- single short message with optional action. Use a Banner instead unless the layout requires a card frame.
+
+## Types
+
+Surfaces vary along three axes: **surface tone**, **elevation**, and **border**. The matrix below names the sanctioned combinations.
+
+- `surface="base"` -- default card background (`color-surface-base`). Pairs with elevation `none` or `subtle`.
+- `surface="subtle"` -- nested panel inside a base card (`color-surface-subtle`). Pairs with elevation `none` only.
+- `surface="transparent"` -- no fill, border-only. Pairs with `border="default"` and elevation `none`.
+
+Three elevation steps: `none`, `subtle`, `prominent`. Elevation `prominent` is reserved for overlays (popovers, dropdowns) -- not for in-flow cards.
+
+## Variants and tokens
+
+| Token group | Sanctioned values | Use |
+|---|---|---|
+| `padding` | `space-100`, `space-200`, `space-300`, `space-400` | Inner spacing of the surface |
+| `surface` (background) | `base`, `subtle`, `transparent` | Surface tone |
+| `border` | `none`, `default`, `subtle` | Surface edge |
+| `borderRadius` | `radius-medium`, `radius-large` | Corner softness |
+| `elevation` | `none`, `subtle`, `prominent` | Shadow depth |
+| `gap` (when surface is a Stack) | `space-100` through `space-400` | Vertical rhythm between children |
+
+Never inline a hex value, a pixel padding, or a `box-shadow` rule. If the value you want is not in the table above, the refinement has outgrown the surface vocabulary -- escalate per the [Refinement](#refinement) bounds.
+
+## Refinement
+
+The five refinement levers from [DESIGN.md](./DESIGN.md#refinement-levers) map to surfaces as composition recipes. Surfaces are the most flexible component family in Pluma; the bounds below keep that flexibility legible.
+
+### Padding scale
+
+The most-used lever. Pick once per surface and let it inherit.
+
+- **Compact** -- `padding="space-100"`. Use for dense list items, metric tiles in a tight grid, and inline cards inside a `DataTable` cell. Best paired with `borderRadius="radius-medium"`.
+- **Default** -- `padding="space-200"`. The right answer for most cards.
+- **Relaxed** -- `padding="space-300"`. Use for feature tiles, settings panels, and any card where the body is a short paragraph the reader should slow down for.
+- **Expansive** -- `padding="space-400"`. Reserve for empty-state surfaces and welcome cards.
+
+Asymmetric padding (different values on different edges) is composed via sprinkle props: `paddingX="space-300" paddingY="space-200"`. Use only when media or a footer needs to bleed past the body padding -- never to fake an alternate scale.
+
+**Ships solo:** one of the four sanctioned values, optionally asymmetric for a documented media or footer reason.
+**Requires design review:** padding values outside the sanctioned scale, padding that changes mid-surface, or any inline pixel value.
+
+### Media placement
+
+The slot where an image, illustration, or icon sits inside the surface.
+
+- **Top** -- media as the first child, full surface width, no surface padding above it. Compose by placing the media inside `<Box marginX={negative-padding-token} marginTop={negative-padding-token}>` to cancel the surface's padding on three sides. Body content padded below.
+- **Leading** -- two-column layout via `Stack direction="horizontal" gap="space-200"`. Media in the leading column, body in the trailing. Use for list items and summary rows where the media is an icon or thumbnail.
+- **Trailing** -- same as leading but with media in the trailing column. Use sparingly; prefer leading unless reading order demands otherwise.
+- **Bleed** -- media extends to all four surface edges; body content overlays it with high-contrast text. Reserve for hero tiles and feature launches. Bleed combined with elevation `prominent` is forbidden -- the shadow stops communicating depth when the image reaches the frame.
+- **Inset frame** -- media has its own padded frame inside the surface (e.g., an illustration with surface-tinted padding around it). Compose by wrapping the media in `<Box padding="space-100" surface="subtle" borderRadius="radius-medium">`.
+
+**Ships solo:** any single sanctioned slot, one media element per surface, recipe composed from `Stack` and `Box`.
+**Requires design review:** multiple media slots in one surface, media that overlaps text without an overlay, or media positioned outside the five slots above.
+
+### Panel proportion (split surfaces)
+
+When a surface uses a horizontal `Stack`, the relative weight of the two columns.
+
+- **50/50** -- both columns weighted equally. Use when neither side dominates.
+- **40/60** (leading lighter) -- media or label leading; content trailing. Use for summary rows.
+- **60/40** (leading heavier) -- content leading; supporting media or metadata trailing. Use for cards with a CTA on the right.
+- **Hug + grow** -- leading column hugs its content (e.g., a 40px icon), trailing column fills the rest. The most common pattern; compose via `Stack direction="horizontal" gap="space-200"` with the leading child sized to its content.
+
+Express proportions via the `Stack` width tokens. Never set widths in pixels or percentages directly.
+
+**Ships solo:** any of the four sanctioned proportions.
+**Requires design review:** three-column layouts inside a single surface, or proportions that change responsively within the same component.
+
+### Density
+
+Vertical rhythm between children of a stacked surface.
+
+- **Compact** -- `gap="space-100"` between children. Use for metric tiles and dense lists.
+- **Default** -- `gap="space-200"`. The right answer for most cards.
+- **Relaxed** -- `gap="space-300"`. Use for feature tiles and onboarding surfaces.
+
+Set density at the surface root via the `Stack` `gap` prop. Do not set per-child margins.
+
+**Ships solo:** one of the three sanctioned gaps per surface.
+**Requires design review:** mixed density within a single surface, or per-child margin overrides.
+
+### Edge treatment
+
+How content meets the surface boundary.
+
+- **Inset** (default) -- all children respect the surface padding.
+- **Flush** -- one or more children extend to the surface edges. Compose by wrapping the flush child in `<Box marginX={negative-padding-token}>` using the negative-margin tokens. Use for dividers, full-width banners, and edge-to-edge media.
+- **Bleed** -- the entire surface content meets the frame on all sides. Reserve for hero tiles with `surface="transparent"` or a full-bleed image.
+
+**Ships solo:** `inset` or `flush` on a single child for a documented reason.
+**Requires design review:** flush on multiple children, bleed combined with elevation `prominent`, or any composition that hides the surface border behind content.
+
+### Elevation refinement
+
+Elevation expresses where the surface sits in the page's depth hierarchy. It is not decoration.
+
+- **None** -- surface sits in the page flow. The default for cards inside a section.
+- **Subtle** -- surface lifts off the page slightly. Use when the surface is interactive (a clickable card, a hovered row) or when it groups content that needs to be visually separated from a busy background.
+- **Prominent** -- reserved for overlay surfaces (popovers, dropdowns, tooltips). Do not use on in-flow cards; if a card needs this much depth, the layout has outgrown the surface vocabulary.
+
+**Ships solo:** `none` or `subtle` based on the role of the surface.
+**Requires design review:** elevation `prominent` on an in-flow surface, or multiple elevation levels stacked on top of each other.
+
+## Content
+
+- Titles in sentence case, action-oriented when the surface is interactive.
+- Keep body content focused. A surface holding more than three paragraphs of body is usually a section, not a card -- move it inline.
+- Pair the title with a short description; do not put all the meaning in the title.
+- Action labels follow [Button](./button.ai-guidelines.md) rules: single verb, sentence case.
+
+## Implementation notes
+
+- Compose surfaces from `<Box>` and `<Stack>` -- never `<div>` with inline styles.
+- The `as` prop renders the underlying element as `section`, `article`, `aside`, or `li` when the surface has semantic meaning. Default is `div`.
+- Surfaces extend Box, so all sprinkle spacing props are available (`padding`, `paddingX`, `paddingY`, `margin`, `gap`, etc.). All values must come from the sanctioned spacing scale.
+- For Ember invocation: `<PlumaBox @padding="space-200" @surface="base" @elevation="subtle">` -- subcomponents and prop names mirror React with the `@` prefix.
+- Surfaces participate in the same color and elevation token system as the rest of Pluma. See [tokens.md](./tokens.md) for the full surface, border, and elevation token reference.
+
+## Related
+
+- [DESIGN.md - Refinement levers](./DESIGN.md#refinement-levers) -- the cross-cutting vocabulary
+- [modal.ai-guidelines.md](./modal.ai-guidelines.md#refinement) -- Modal-specific recipes
+- [banner.ai-guidelines.md](./banner.ai-guidelines.md#refinement) -- Banner-specific recipes
+- [tokens.md](./tokens.md) -- spacing, surface, border, elevation, and color tokens

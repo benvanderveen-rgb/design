@@ -83,6 +83,8 @@ Use for backgrounds, fills, and container surfaces.
 | `color-surface-accent-minimal` | `palette-teal_spruce-100` |
 | `color-surface-accent-subtle` | `palette-teal_spruce-200` |
 
+**Brand teal — visual reference.** `palette-teal_spruce-400` is Customer.io's brand accent: a **dark, spruce-leaning teal**, not a blue, not a bright turquoise. It is the color of every primary button in the live product. Approximate hex: `#1F4548` (confirm against Pluma's CSS variable definitions — `themeVars.color['surface-accent']` is the runtime source of truth). If a generated UI shows a sea-blue or sky-blue primary button, the token has been swapped for an inline hex — fix it back to `color-surface-accent`.
+
 ### Surface — caution
 
 | Token | Underlying |
@@ -522,7 +524,7 @@ Both link tokens use `text-decoration: underline`. The difference is weight (med
 
 ## What's missing from this file
 
-- **Dark theme tokens.** This file covers light theme only. When dark theme tokens exist, they live in a parallel `palette-*` set.
+- **Dark theme tokens.** This file covers light theme only today. Dark mode is shipping soon — tokens will land directly in Pluma as part of the migration, as a parallel `palette-*` set surfaced through the same MCP and site interfaces. Watch the Pluma repo.
 - **Hex values.** Tokens reference palette names (e.g., `palette-grey_charcoal-050`), not raw hex. The palette → hex mapping lives in Pluma's CSS variable definitions (`themeVars.color[...]` resolves at runtime).
 - **Primitive typography tokens.** Composite text tokens are documented above; the primitives they reference (`font-size-xl`, `font-weight-semibold`, etc.) are not. Add the primitives when the source data is available so the mapping is concrete.
 - **Spacing, radius, shadow tokens.** This file covers color and typography. Other token families are still TODO.

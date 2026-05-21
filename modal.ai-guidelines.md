@@ -4,7 +4,7 @@
 
 - Use Modal for tasks requiring the user's immediate attention: action confirmations, short forms, feature moments, and supplementary workflows.
 - Never nest Modals. Rework the flow, move content inline, or use a Popover instead.
-- Use Modal when users must confirm a task or provide input before continuing. Use Drawer for content with less contextual relation to the main page. Use Popover for small, inline supplementary content.
+- Use Modal when people must confirm a task or provide input before continuing. Use Drawer for content with less contextual relation to the main page. Use Popover for small, inline supplementary content.
 - Keep Modal content focused on a single task. Move multi-step workflows or lengthy content to a dedicated page.
 
 ## Common Patterns

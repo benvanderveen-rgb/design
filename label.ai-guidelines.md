@@ -4,7 +4,7 @@
 
 - Use Labels to indicate status or categorize items with short descriptive text (e.g., "Active", "Draft").
 - Use Badges, not Labels, to display numeric quantities (e.g., notification counts).
-- Use Tags, not Labels, for user-generated, interactive categorization that users can create, edit, or remove. Labels are read-only system indicators.
+- Use Tags, not Labels, for interactive categorization that people can create, edit, or remove. Labels are read-only system indicators.
 
 ## Variants
 
