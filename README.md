@@ -2,7 +2,7 @@
 
 The AI-legibility design spec for Customer.io product UI. Currently hosted at [benvanderveen-rgb/design](https://github.com/benvanderveen-rgb/design) while in research-preview; will migrate to the `customerio` org once stable.
 
-This repo hosts the meta-layer for [Pluma](https://github.com/customerio/pluma), Customer.io's design system. It is read by AI agents (Claude Design, Cursor, Stitch, Copilot) and human designers and engineers to generate UI that matches Customer.io product conventions: dense, calm, tool-not-brochure.
+This repo hosts the meta-layer for **Pluma** ([pluma.customer.io](https://pluma.customer.io/)), Customer.io's design system. The Pluma component code lives at [customerio/pluma](https://github.com/customerio/pluma). Read by AI agents (Claude Design, Cursor, Stitch, Copilot) and human designers and engineers to generate UI that matches Customer.io product conventions: dense, calm, tool-not-brochure.
 
 ## Read first
 
