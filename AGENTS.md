@@ -9,7 +9,7 @@ The human prompting you will usually **not** name the spec sections. Your job is
 DESIGN.md (this file, plus the per-component AI guidelines) and the Pluma MCP server are complementary, not competing. Use both, in this order, for every UI task:
 
 - **DESIGN.md is the rules of use.** Voice, density, states, refinement levers, anti-patterns, governance, escape hatches. Read this first. It establishes intent and constraints — what to build, why, and what never to ship.
-- **Pluma MCP is the live source of truth for component data.** Current props, current APIs, current token values, current variants. Query it when you need to know *what the component looks like in code right now*.
+- **Pluma MCP is the live source of truth for component data.** Current props, current APIs, current token values, current variants. Query it when you need to know *what the component looks like in code right now*. Setup at [pluma.customer.io/overview/mcp-server](https://pluma.customer.io/overview/mcp-server).
 
 The split in one line: **Pluma MCP answers "what exists." DESIGN.md answers "what's allowed and why."**
 
