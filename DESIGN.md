@@ -1,10 +1,12 @@
 # DESIGN.md — Customer.io Product Design System
 
-Single source of truth for AI agents and humans building Customer.io product UI. Read this before generating any screen, component, or copy.
+The rules layer for AI agents and humans building Customer.io product UI. Read this before generating any screen, component, or copy.
 
-**For AI agents (Cursor, Claude, Stitch):** the rules sections below define tone, voice, components, states, density, and anti-patterns.
-**For engineers:** the component documentation index, Pluma MCP setup, and doc template at the bottom.
-**For designers and PMs:** the canonical reference for how Customer.io UI looks, behaves, and sounds.
+This file sits on top of **Pluma** — Customer.io's design system at https://pluma.customer.io/ — and defines the cross-cutting tone, voice, states, density, refinement levers, and anti-patterns that Pluma's component and pattern pages do not yet name. Component APIs, foundations, and the canonical MCP setup live in Pluma; this file is the opinionated layer that constrains how the pieces compose.
+
+**For AI agents (Cursor, Claude, Stitch):** the rules sections below define tone, voice, components, states, density, and anti-patterns. For component APIs, query the Pluma MCP or visit the Pluma site.
+**For engineers:** the rules below plus the Pluma MCP setup at https://pluma.customer.io/overview/mcp-server.
+**For designers and PMs:** the reference for how Customer.io UI looks, behaves, and sounds, paired with Pluma's component and pattern pages.
 
 ---
 
@@ -352,7 +354,9 @@ When a rule must be broken:
 
 ## Component documentation index
 
-The files below document individual Pluma components in depth. The rules above are cross-cutting guidance; per-component API details, accessibility, and code examples live in these files. Reach for the relevant doc when this file's reach-for rules aren't specific enough.
+Per-component API details, accessibility, and code examples live on the public Pluma site at https://pluma.customer.io/components and https://pluma.customer.io/foundations. The table below maps each topic to the canonical Pluma page; the repo-level paths in this section refer to legacy or in-progress local files and are being phased out as Pluma's site becomes the single reference.
+
+The rules above are cross-cutting guidance; reach for the Pluma page when this file's reach-for rules aren't specific enough. Each Pluma page includes a "Copy for LLMs" affordance for pulling agent-ready context.
 
 ### Foundations
 
@@ -430,6 +434,8 @@ Adding per-component AI guidelines for these is the highest-leverage way to expa
 
 ## Pluma MCP Server — Setup
 
+> Canonical setup page: https://pluma.customer.io/overview/mcp-server. The summary below is included so this file remains usable as a standalone bundle; treat the Pluma page as the source of truth when the two disagree.
+
 The Pluma MCP server (`@customerio/pluma-mcp`) exposes Pluma's design tokens, component specs, and usage guidelines directly to Claude. Once connected, you can ask questions and get accurate, up-to-date design system context without leaving your workflow.
 
 ### Prerequisites
@@ -440,7 +446,7 @@ The Pluma MCP server (`@customerio/pluma-mcp`) exposes Pluma's design tokens, co
 
 ### Configuration
 
-Add the following to your MCP host config file. For **Claude Desktop**, this is `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows). For **Claude Code**, add it to `.claude/settings.json` under `mcpServers`.
+Add the following to your MCP host config file. For **Claude Desktop**, this is `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows). For **Claude Code**, add it to `.claude/settings.json` under `mcpServers`. For **Cursor**, see `~/.cursor/mcp.json`.
 
 ```json
 {
@@ -524,8 +530,9 @@ Links to related components or Figma frames.
 
 ## Resources
 
-- [Pluma on Figma](#) — internal link, update with the Figma file URL
-- [Pluma Storybook](#) — internal link, update with the Storybook URL
+- [Pluma design system](https://pluma.customer.io/) — canonical site (public-shareable). Foundations, Components, Patterns, Advanced, Fly Migration, Changelog.
+- [Pluma MCP setup](https://pluma.customer.io/overview/mcp-server) — maintained MCP configuration for Cursor, Claude Code, and other hosts.
+- [Pluma About](https://pluma.customer.io/overview/about) — system positioning, lifecycle, accessibility, history.
 - [Pluma GitHub repo](https://github.com/customerio/pluma) — internal
 - [Customer.io Design blog](https://medium.com/customer-io-design)
 - DESIGN.md mission and project plan: see `Design.md project/DESIGN-md-mission.md` and the Linear project at https://linear.app/customerio/project/designmd-3d70a4786aa1

@@ -41,7 +41,7 @@ In ninety days, more concretely:
 
 ## What this isn't
 
-DESIGN.md is not the design system. The design system is **Pluma** ([internal.customer.io/pluma/](https://internal.customer.io/pluma/)) — the component library, tokens, and pattern documentation we already maintain. DESIGN.md is the meta-layer that makes Pluma legible to AI agents.
+DESIGN.md is not the design system. The design system is **Pluma** ([pluma.customer.io](https://pluma.customer.io/)) — the component library, tokens, and pattern documentation we already maintain. DESIGN.md is the rules layer that makes Pluma legible to AI agents.
 
 It doesn't replace design review for new patterns, customer-facing changes, or anything touching the journey canvas, onboarding flows, or Liquid editing. The escalation list lives in §13 of the file itself.
 

@@ -2,7 +2,7 @@
 
 > Snapshot of where the DESIGN.md initiative stands. Updated as the work moves; this file is the canonical "what is happening right now" view alongside `DESIGN-md-mission.md` (the why) and the Notion practical guide (the public framing).
 
-**Last updated:** 2026-05-15
+**Last updated:** 2026-05-28
 **DRI:** Ben VanderVeen (`ben.vanderveen@customer.io`)
 **Linear project:** [Design.md](https://linear.app/customerio/project/designmd-3d70a4786aa1) (Pluma team · status: Idea · priority: High · start 2026-05-11 · target 2026-07-31)
 **Notion practical guide:** [DESIGN.md at Customer.io — A Practical Guide](https://www.notion.so/custio/DESIGN-md-at-Customer-io-A-Practical-Guide-35a4302f4c2b80bfba15d593312ded87) (Draft v1.1, last updated 2026-05-13)
@@ -51,12 +51,16 @@ Tracked in the Notion guide; restating here so they live alongside the file they
 
 - **Engineer-driven UIs without FE/design are increasing.** Richard, Akram, Shanil all confirmed seeing this pattern in the 2026-05-14 thread — validates the project premise. Worth a metric to watch over the 90-day window.
 - **The framing is "engineer confidence," not just "error prevention."** Jen's reaction and Bernard's ask both point at confidence-as-the-win. That changes what §13 needs to do.
+- **Pluma is now public-shareable (2026-05-28).** The site at https://pluma.customer.io/ has the Polaris-shaped IA (Foundations / Components / Patterns / Advanced), a public MCP setup page, versioned packaging, and per-page "Copy for LLMs" export. Patterns section already holds three pages. This collapses the consolidation timeline — Phase 1 of the pitch is substantially in place; Phase 2 (porting the payload) is the next move. Richard's "why not in Pluma" open question is resolved by the site architecture itself.
 
 ## Next steps
 
-- [ ] Decide v0 scope explicitly — confirm copy/color/motion as the slam-dunk capabilities; defer tables and charts to v0.1
+- [ ] Shape the five payload sections (Voice, Refinement levers, States, Density, Anti-patterns) as Pluma pattern-page candidates — drafts ready to hand to Kevin / Pluma team for porting
+- [ ] Pin the porting conversation with Kevin / Pluma team — order of operations for moving payload from `benvanderveen-rgb/design` into `pluma.customer.io/patterns`
+- [ ] Open the announce / no-announce question with Matt + EPDL — public Pluma URL is shareable today; what is the timeline on treating it as a Polaris-style external surface?
+- [ ] Decide the fate of `DESIGN-bundle.md` — keep as a portable artifact for pre-MCP use cases, or retire once payload lives in Pluma
+- [ ] Decide v0 scope explicitly — confirm copy / color / motion as the slam-dunk capabilities; defer tables and charts to v0.1
 - [ ] Reconcile with Shanil's designer-skills workshop output — is DESIGN.md the orchestration layer, a sibling, or a subset?
-- [ ] Answer Richard's "why not in Pluma?" — short decision table for file vs. MCP vs. component docs
 - [ ] Name the "ship solo vs. needs design" boundary for §13
 - [ ] Pull the principles exercise forward; feed into both DESIGN.md and Shanil's skills
 - [ ] Identify the DRI (currently TBD in the Notion guide; Ben is acting DRI for v0)
@@ -65,11 +69,13 @@ Tracked in the Notion guide; restating here so they live alongside the file they
 - [x] Ship the bundle to a first external tester (Andreas, 2026-05-12)
 - [x] Hold the design-team review (2026-05-12)
 - [x] Move the Linear project from "Pluma.md" naming to "Design.md" — 2026-05-11
+- [x] Resolve Richard's "why not in Pluma?" — answered by the public site's IA (Foundations / Components / Patterns / Advanced), 2026-05-28
 
 ## Reference
 
 - Linear project: https://linear.app/customerio/project/designmd-3d70a4786aa1
 - Notion guide: https://www.notion.so/custio/DESIGN-md-at-Customer-io-A-Practical-Guide-35a4302f4c2b80bfba15d593312ded87
-- Pluma design system: https://internal.customer.io/pluma/
+- Pluma design system (public): https://pluma.customer.io/
+- Pluma MCP setup (public): https://pluma.customer.io/overview/mcp-server
 - Stitch DESIGN.md announcement: https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-design-md/
 - Awesome DESIGN.md examples: https://github.com/VoltAgent/awesome-design-md
