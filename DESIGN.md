@@ -10,6 +10,64 @@ This file sits on top of **Pluma** — Customer.io's design system at https://pl
 
 ---
 
+## Design principles
+
+These three principles are the layer everything below expresses. The rules — tone, components, states, density — are *how* we build; the principles are *why* we resolve a decision one way and not another.
+
+**How to use them (this is the point).** A generic prompt produces defensible, average-case UI because it has no reason to prefer one good option over another, so it hedges toward convention. Principles give the agent a reason. They are tiebreakers: when two or three layouts, flows, or copy choices are all reasonable, the principle names the one that is *ours*. That is where distinctiveness comes from — not more rules, but stated preferences that resolve the ties a generic model would resolve blandly.
+
+Each principle has two layers. The **narrative** is the intent, for humans and for context. The **Apply** block is the operational contract: the testable directives an agent keys off. When generating UI, treat the Apply blocks as binding — if a choice contradicts one, it is wrong, the same as violating a component rule below. When the narrative and the Apply block seem to diverge, the Apply block wins for the specific decision in front of you.
+
+**Resolving the built-in tensions.** The principles intentionally pull against each other — flexibility vs. familiarity, speed vs. friction. That nuance is for humans; an agent needs the resolution stated. The defaults are: **paved over dirt, familiar over novel, fast over slow.** Each has named exceptions below. Absent an exception, take the default.
+
+### One paved road, many dirt roads
+
+Our champions love us for knowing anything is possible. Power and flexibility are at our core. We will continue to build dirt roads to allow customers to realize this power. Not everyone wants to go offroading. There must be a paved road. We are opinionated about the primary path our customer should take. That provides the focus needed to deliver a quality experience. It is hard to create a quality experience for everyone or every path.
+
+We acknowledge teams use Customer.io. A paved road looks different for a growth practitioner than a data partner. We always offer guidance and direction to help customers make progress toward their goal. We aim to help customers level up their skills, instead of requiring them.
+
+A paved road...
+
+- is a smooth ride, free from unwanted bumps. There cannot be an unresolved edge case, inconsistent label, or a missing empty state.
+- is built by sequencing capabilities, not removing them. Functionality is contextually relevant instead of always visible.
+- leads to a destination. That's your north star. This is how power can feel personal.
+
+**Apply:**
+
+- Design the primary path first and make it the visual and interactive default. Power-user and edge-case affordances remain reachable but never compete with the primary path for attention.
+- Reveal capability by sequence and context, not all at once. Surface a control when its moment arrives; do not show every option upfront. (See [Density](#density) and progressive disclosure in component rules.)
+- Every screen on the paved road resolves all five [states](#states--every-screen-must-define-all-five). A missing empty state, an inconsistent label, or an unhandled edge case means the road is not paved — do not ship it.
+- Every primary flow has a clear destination and a next step toward it. No screen is a dead end.
+- **Exception (dirt roads):** advanced or escape-hatch paths may expose more and guide less — but only when the primary path is fully built first, and the dirt road must be a deliberate detour, not the default.
+
+### Do the least surprising thing
+
+Our customers trust us to orchestrate their messaging strategy. Sending real messages to real people is high stakes. Trust is non-negotiable. We build trust through predictable and accepted patterns. We exhaust the system first before innovating. We invent to move the system forward, not to move faster in the moment.
+
+Our innovation is what the product does for customers: the insight, the automation, the capability. Our customer's messaging strategy should be novel. Our interface should feel familiar. Predictable patterns help us deliver clarity, usability, and accessibility.
+
+**Apply:**
+
+- When a choice has a conventional pattern and a novel one and both work, take the conventional one. "Least surprising" is the tiebreaker.
+- Exhaust Pluma before inventing. Reuse an existing component, token, or pattern rather than composing a new one. A new primitive is a last resort that goes through `#design-systems`, never a shortcut to ship faster. (Reinforces [Components — use Pluma only](#components--use-pluma-only-never-invent-primitives) and [Escape hatches](#escape-hatches).)
+- Locate novelty in what the product *does* — the insight, automation, capability — not in how the interface looks or behaves. A novel layout for a familiar task is a defect, not a feature.
+- **Relationship to dirt roads:** flexibility (Principle 1) is about how much power a path exposes; familiarity (this principle) is about the patterns that path is built from. A dirt road can be powerful and still use familiar, predictable patterns — and it should.
+
+### Every action should build confidence
+
+Our customers aren't trying to start a campaign, they're trying to grow their business. We design with their ambition in mind, not just their workflow. Customers should feel certain they completed the task, did it well, and know what to do next. They should feel more capable than when they started. That confidence will compound and build momentum over time. The moment after the click is as important as the click itself.
+
+Speed is a virtue in most of our product. AI can compress the work of creating segments or building campaigns. We deliberately introduce friction at the seam. A small change to a segment can change behavior in a campaign, and ultimately send the wrong messages to the wrong audience. Our Agent knows more than our customer when it comes to their event data, audience, campaigns, etc. The product can be a thought partner, but our customers always remain in control. They are the expert.
+
+**Apply:**
+
+- Every action resolves to an unambiguous outcome: a success state confirming it completed (see [States — Success](#states--every-screen-must-define-all-five)) and, where relevant, the next step toward the customer's goal. The moment after the click is part of the design, not an afterthought.
+- Default to speed. Do not add confirmation steps, interstitials, or "Are you sure?" friction to routine, low-stakes, or reversible actions. (Reinforces the [anti-pattern](#anti-patterns--never-generate) against unnecessary confirmation modals.)
+- **Exception (friction at the seam):** insert a deliberate confirmation step only where a change cascades into live messaging — editing a segment that feeds a running campaign, changing an audience, altering a trigger. Name the downstream effect in the confirmation ("This segment feeds 3 live campaigns"), not a generic warning.
+- AI proposes, the customer decides. The Agent may suggest, draft, or pre-fill using what it knows about the customer's data — but high-stakes changes are surfaced for explicit confirmation, never auto-executed. Keep the customer in control; they are the expert on their intent.
+
+---
+
 ## Tone
 
 - Dense, calm, tool-not-brochure
